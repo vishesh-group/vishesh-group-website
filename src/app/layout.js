@@ -14,11 +14,12 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata = {
-  title: "Vishesh Group | Premium Modern Luxury Real Estate & Corporate Spaces",
-  description: "Experience modern luxury, corporate excellence, and premium spaces designed by Vishesh Group. Explore our businesses: Real Estate, Coworking, Education, and Horticulture.",
+  title: "Premium Real Estate in Navi Mumbai | Vishesh Group",
+  description: "Discover luxury real estate and premium commercial spaces in Navi Mumbai, Panvel, Taloja, and Akurli with Vishesh Group. Explore Balaji Symphony, Balaji Evergreen, and Balaji Evara.",
 };
 
 import AnimatedCursor from "../components/AnimatedCursor";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 export default function RootLayout({ children }) {
   return (
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col font-sans bg-white text-zinc-900">
         <AnimatedCursor />
         {children}
+        <WhatsAppButton />
       </body>
     </html>
   );

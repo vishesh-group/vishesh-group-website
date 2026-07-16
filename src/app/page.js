@@ -75,14 +75,14 @@ export default function Home() {
     {
       image: "/Images/Close_Up_View_FFF.jpg.jpeg",
       location: "Taloja, Navi Mumbai",
-      title: "Vishesh Imperial",
+      title: "Balaji Evergreen",
       description: "A premium residential landmark with meticulously planned layouts, high-end design, and excellent connectivity.",
       href: "#projects"
     },
     {
       image: "/Images/Front eve view F.jpg.jpeg",
       location: "Akurli, Navi Mumbai",
-      title: "Vishesh Era",
+      title: "Balaji Evara",
       description: "Contemporary, eco-friendly residences offering the perfect blend of modern comfort and lush green surroundings.",
       href: "#projects"
     }
@@ -190,11 +190,11 @@ export default function Home() {
                 {slides[currentSlide].category}
               </span>
 
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-tight text-white max-w-5xl leading-[1.05] mb-6">
+              <h1 className="text-4xl md:text-6xl lg:text-8xl font-light tracking-tight text-white max-w-5xl leading-[1.05] mb-6">
                 {slides[currentSlide].title}
               </h1>
 
-              <p className="text-base md:text-lg text-zinc-300 max-w-xl font-light leading-relaxed mb-8">
+              <p className="text-sm md:text-lg text-zinc-300 max-w-xl font-light leading-relaxed mb-8">
                 {slides[currentSlide].description}
               </p>
 
@@ -269,7 +269,7 @@ export default function Home() {
       </section>
 
       {/* About Vishesh Group Section */}
-      <section id="about" className="py-24 md:py-32 bg-white text-charcoal border-b border-zinc-100">
+      <section id="about" className="py-16 md:py-32 bg-white text-charcoal border-b border-zinc-100">
         <div className="mx-auto max-w-[1400px] w-full px-6 md:px-12">
 
           {/* Top Half: Header and Description Grid */}
@@ -286,7 +286,7 @@ export default function Home() {
               <span className="text-xs uppercase tracking-[0.3em] text-gold font-bold mb-4 block">
                 About Vishesh Group
               </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-charcoal leading-[1.15] max-w-md">
+              <h2 className="text-2xl md:text-4xl lg:text-5xl font-light tracking-tight text-charcoal leading-[1.15] max-w-md">
                 Redefining Spaces with Trust, Quality, and Legacy.
               </h2>
             </motion.div>
@@ -299,7 +299,7 @@ export default function Home() {
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
               className="lg:col-span-7"
             >
-              <p className="text-base md:text-lg text-slategray font-light leading-relaxed">
+              <p className="text-sm md:text-lg text-slategray font-light leading-relaxed">
                 Vishesh Group is a prominent real estate developer specializing in premium residential projects, most notably the 10-acre Balaji Symphony in Panvel. With over 25 years of experience, we focus on innovative, eco-friendly designs and high-quality construction across Navi Mumbai, Panvel, Akurli, and Taloja. Our vision is to create iconic landmarks that redefine urban living and commercial excellence while setting new benchmarks in quality, design, and sustainability. At Vishesh Group, every project is more than just a development—it is a statement of trust, craftsmanship, and aspiration.
               </p>
             </motion.div>
@@ -375,7 +375,7 @@ export default function Home() {
                 </div>
 
                 {/* Value count */}
-                <span className="text-4xl md:text-5xl font-light tracking-tight text-charcoal mt-6 block group-hover:text-gold transition-colors duration-300">
+                <span className="text-3xl md:text-5xl font-light tracking-tight text-charcoal mt-6 block group-hover:text-gold transition-colors duration-300">
                   <AnimatedStat value={stat.value} />
                 </span>
 
@@ -404,7 +404,7 @@ export default function Home() {
       />
 
       {/* Ongoing Projects Section */}
-      <section id="projects" className="py-24 md:py-32 bg-zinc-950 text-white relative overflow-hidden">
+      <section id="projects" className="py-16 md:py-32 bg-zinc-950 text-white relative overflow-hidden">
         {/* Subtle decorative elements, like soft gold glow circles */}
         <div className="absolute top-1/4 left-[10%] w-96 h-96 bg-gold/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-[10%] w-96 h-96 bg-gold/5 rounded-full blur-[120px] pointer-events-none" />
@@ -416,7 +416,7 @@ export default function Home() {
             <span className="text-xs uppercase tracking-[0.35em] text-gold font-semibold mb-4 block">
               ONGOING REAL ESTATE PROJECTS IN NAVI MUMBAI
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-white leading-tight">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-white leading-tight">
               Residential Projects
             </h2>
           </div>
@@ -433,7 +433,7 @@ export default function Home() {
                 className="group flex flex-col bg-zinc-900/40 rounded-2xl border border-zinc-800/60 overflow-hidden hover:border-gold/45 hover:bg-zinc-900/70 transition-all duration-500 hover:shadow-2xl hover:shadow-gold/5"
               >
                 {/* Image Container with zoom & gradient fade */}
-                <div className="relative h-[380px] w-full overflow-hidden">
+                <div className="relative h-[280px] md:h-[380px] w-full overflow-hidden">
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -449,7 +449,7 @@ export default function Home() {
                     <span className="text-xs uppercase tracking-[0.2em] text-gold font-semibold block mb-1">
                       {project.location}
                     </span>
-                    <h3 className="text-2xl font-serif text-white font-medium">
+                    <h3 className="text-xl md:text-2xl font-serif text-white font-medium">
                       {project.title}
                     </h3>
                   </div>
