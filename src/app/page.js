@@ -9,6 +9,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Header from "../components/Header";
 import ScrollImageSequence from "../components/ScrollImageSequence";
+import LeadForm from "../components/LeadForm";
+import LuxuryContactForm from "../components/LuxuryContactForm";
+import LuxuryFooter from "../components/LuxuryFooter";
+import LuxuryAboutSection from "../components/LuxuryAboutSection";
+import { Check, PhoneCall } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -44,6 +49,10 @@ const AnimatedStat = ({ value }) => {
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [progress, setProgress] = useState(0);
+
+  const contactSectionRef = useRef(null);
+  const contactTextRef = useRef(null);
+  const contactFormRef = useRef(null);
 
   const slides = [
     {
@@ -120,7 +129,7 @@ export default function Home() {
 
   // 2. Set up progress bar loader interval
   useEffect(() => {
-    setProgress(0);
+    const timer = setTimeout(() => setProgress(0), 0);
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -129,16 +138,58 @@ export default function Home() {
         return prev + 1.67;
       });
     }, 100);
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
   }, [currentSlide]);
 
   // 3. Trigger slide advancement on progress completion
   useEffect(() => {
     if (progress >= 100) {
-      nextSlide();
-      setProgress(0);
+      const timer = setTimeout(() => {
+        nextSlide();
+        setProgress(0);
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [progress, nextSlide]);
+
+  // 4. Contact Section GSAP Animation
+  useEffect(() => {
+    if (contactSectionRef.current) {
+      gsap.fromTo(
+        contactTextRef.current,
+        { opacity: 0, x: -40 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: contactSectionRef.current,
+            start: "top 80%",
+          }
+        }
+      );
+
+      gsap.fromTo(
+        contactFormRef.current,
+        { opacity: 0, x: 40 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          delay: 0.2,
+          scrollTrigger: {
+            trigger: contactSectionRef.current,
+            start: "top 80%",
+          }
+        }
+      );
+    }
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans overflow-x-hidden">
@@ -174,41 +225,58 @@ export default function Home() {
         {/* Luxury gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-black/75 z-10"></div>
 
-        {/* Slide Content Overlay (Spring staggered) */}
-        <div className="absolute inset-0 flex items-center z-10">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ type: "spring", stiffness: 180, damping: 24, mass: 0.8 }}
-              className="mx-auto max-w-[1400px] w-full px-6 md:px-12 flex flex-col justify-end h-[75%] pb-20 select-none"
-            >
+        {/* Slide Content Overlay with Split Layout */}
+        <div className="absolute inset-0 flex items-center z-10 pt-28 lg:pt-36 pb-12">
+          <div className="mx-auto max-w-[1400px] w-full px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center h-full">
 
-              <span className="text-xs uppercase tracking-[0.35em] text-gold font-bold mb-4 block">
-                {slides[currentSlide].category}
-              </span>
-
-              <h1 className="text-4xl md:text-6xl lg:text-8xl font-light tracking-tight text-white max-w-5xl leading-[1.05] mb-6">
-                {slides[currentSlide].title}
-              </h1>
-
-              <p className="text-sm md:text-lg text-zinc-300 max-w-xl font-light leading-relaxed mb-8">
-                {slides[currentSlide].description}
-              </p>
-
-              <div className="flex">
-                <Link
-                  href={slides[currentSlide].href}
-                  className="px-8 py-3.5 rounded-full bg-white text-charcoal font-semibold text-xs tracking-widest uppercase hover:bg-gold hover:text-white hover:scale-[1.03] transition-all duration-300 shadow-xl"
+            {/* Left Side: Animated Text */}
+            <div className="lg:col-span-7 flex flex-col justify-center h-full md:pb-20">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ type: "spring", stiffness: 180, damping: 24, mass: 0.8 }}
+                  className="flex flex-col select-none"
                 >
-                  {slides[currentSlide].cta}
-                </Link>
-              </div>
+                  <span className="text-xs uppercase tracking-[0.35em] text-gold font-bold mb-4 block">
+                    {slides[currentSlide].category}
+                  </span>
 
-            </motion.div>
-          </AnimatePresence>
+                  <h1 className="text-4xl md:text-5xl lg:text-7xl font-light tracking-tight text-white max-w-4xl leading-[1.05] mb-6 drop-shadow-xl">
+                    {slides[currentSlide].title}
+                  </h1>
+
+                  <p className="text-sm md:text-lg text-zinc-300 max-w-lg font-light leading-relaxed mb-8 drop-shadow-md">
+                    {slides[currentSlide].description}
+                  </p>
+
+                  <div className="flex">
+                    <Link
+                      href={slides[currentSlide].href}
+                      className="px-8 py-3.5 rounded-full bg-white text-charcoal font-semibold text-xs tracking-widest uppercase hover:bg-gold hover:text-white hover:scale-[1.03] transition-all duration-300 shadow-xl"
+                    >
+                      {slides[currentSlide].cta}
+                    </Link>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Right Side: Lead Form */}
+            <div className="lg:col-span-5 hidden lg:flex items-center justify-end h-full md:pb-20">
+              <motion.div
+                initial={{ opacity: 0, x: 40, filter: "blur(10px)" }}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+                className="w-full max-w-[450px]"
+              >
+                <LeadForm />
+              </motion.div>
+            </div>
+
+          </div>
         </div>
 
         {/* Carousel Slide Indicators (Luxury Progress Bars) */}
@@ -269,139 +337,22 @@ export default function Home() {
       </section>
 
       {/* About Vishesh Group Section */}
-      <section id="about" className="py-16 md:py-32 bg-white text-charcoal border-b border-zinc-100">
-        <div className="mx-auto max-w-[1400px] w-full px-6 md:px-12">
-
-          {/* Top Half: Header and Description Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
-
-            {/* Left Header Box */}
-            <motion.div
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="lg:col-span-5"
-            >
-              <span className="text-xs uppercase tracking-[0.3em] text-gold font-bold mb-4 block">
-                About Vishesh Group
-              </span>
-              <h2 className="text-2xl md:text-4xl lg:text-5xl font-light tracking-tight text-charcoal leading-[1.15] max-w-md">
-                Redefining Spaces with Trust, Quality, and Legacy.
-              </h2>
-            </motion.div>
-
-            {/* Right Description Text */}
-            <motion.div
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
-              className="lg:col-span-7"
-            >
-              <p className="text-sm md:text-lg text-slategray font-light leading-relaxed">
-                Vishesh Group is a prominent real estate developer specializing in premium residential projects, most notably the 10-acre Balaji Symphony in Panvel. With over 25 years of experience, we focus on innovative, eco-friendly designs and high-quality construction across Navi Mumbai, Panvel, Akurli, and Taloja. Our vision is to create iconic landmarks that redefine urban living and commercial excellence while setting new benchmarks in quality, design, and sustainability. At Vishesh Group, every project is more than just a development—it is a statement of trust, craftsmanship, and aspiration.
-              </p>
-            </motion.div>
-
-          </div>
-
-          {/* Bottom Half: Statistics Cards Grid */}
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={{
-              hidden: { opacity: 0 },
-              show: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.12,
-                  delayChildren: 0.25
-                }
-              }
-            }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-zinc-100 mt-20 divide-y md:divide-y-0 md:divide-x divide-zinc-100"
-          >
-            {[
-              {
-                value: "25",
-                label: "Years of Legacy",
-                icon: (
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                  </svg>
-                )
-              },
-              {
-                value: "1.2M+",
-                label: "Sq. Ft. Under Construction",
-                icon: (
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A2 2 0 013 15.485V6.757a2 2 0 011.056-1.765L9 2.228m0 17.772V2.228m0 17.772l5.447-2.724A2 2 0 0019 15.485V6.757a2 2 0 00-1.056-1.765L12 2.228m-3 1H3m3 3h3m-3 3h3m3-6h6m-6 3h6m-6 3h6" />
-                  </svg>
-                )
-              },
-              {
-                value: "2M+",
-                label: "Sq. Ft. Delivered",
-                icon: (
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>
-                )
-              },
-              {
-                value: "500+",
-                label: "Happy Families",
-                icon: (
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                )
-              }
-            ].map((stat, idx) => (
-              <motion.div
-                key={idx}
-                variants={{
-                  hidden: { opacity: 0, y: 30 },
-                  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 180, damping: 24 } }
-                }}
-                className="group relative flex flex-col p-8 md:p-10 transition-all duration-500 hover:bg-zinc-50/50 cursor-default"
-              >
-                {/* SVG Icon Container with gold transition */}
-                <div className="w-10 h-10 rounded-xl bg-zinc-50 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-white transition-all duration-500 shadow-sm group-hover:scale-105 group-hover:shadow-md group-hover:shadow-gold/10">
-                  {stat.icon}
-                </div>
-
-                {/* Value count */}
-                <span className="text-3xl md:text-5xl font-light tracking-tight text-charcoal mt-6 block group-hover:text-gold transition-colors duration-300">
-                  <AnimatedStat value={stat.value} />
-                </span>
-
-                {/* Label */}
-                <span className="text-xs uppercase tracking-[0.15em] text-slategray font-semibold mt-2 block">
-                  {stat.label}
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
-
-        </div>
-      </section>
+      <LuxuryAboutSection />
 
       {/* Cinematic Scroll Image Sequence Showcase */}
-      <ScrollImageSequence
-        folder="Motion1"
-        frameCount={240}
-        extension="jpg"
-        startFrame={12}
-        prefix="ezgif-frame-"
-        digits={3}
-        scrollContainerHeight="350vh"
-        objectFit="cover"
-        backgroundColor="bg-zinc-950"
-      />
+      <div className="relative z-10">
+        <ScrollImageSequence
+          folder="Motion1"
+          frameCount={240}
+          extension="jpg"
+          startFrame={12}
+          prefix="ezgif-frame-"
+          digits={3}
+          scrollContainerHeight="350vh"
+          objectFit="cover"
+          backgroundColor="bg-zinc-950"
+        />
+      </div>
 
       {/* Ongoing Projects Section */}
       <section id="projects" className="py-16 md:py-32 bg-zinc-950 text-white relative overflow-hidden">
@@ -491,6 +442,89 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ULTRA LUXURY Lead Generation Section */}
+      <section id="contact" className="py-24 md:py-32 relative bg-[#090909] overflow-hidden">
+
+        {/* Subtly Animated Particles / Background Layers */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          {/* Architectural Grid */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+
+          {/* Radial Gradients & Vignette */}
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#D4AF37]/5 rounded-full blur-[150px]" />
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#D4AF37]/5 rounded-full blur-[120px]" />
+          <div className="absolute inset-0 bg-black/40 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black_100%)]" />
+        </div>
+
+        <div className="mx-auto max-w-[1400px] w-full px-6 md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
+
+          {/* LEFT SIDE (Luxury Content) */}
+          <div className="lg:col-span-7 flex flex-col justify-center h-full">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <div className="h-px w-8 bg-[#D4AF37]/60" />
+                <span className="text-[11px] uppercase tracking-[0.4em] text-[#D4AF37] font-semibold">
+                  EXPERIENCE LUXURY
+                </span>
+              </div>
+
+              <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif text-white leading-[1.1] mb-8 font-light tracking-tight">
+                Schedule Your <br className="hidden md:block" /> Private Tour.
+              </h2>
+
+              <p className="text-base md:text-lg text-[#B7B7B7] font-light leading-relaxed mb-12 max-w-xl">
+                Discover a world where architectural grandeur meets timeless elegance. Leave your details below and our exclusive relationship manager will orchestrate a personalized viewing experience tailored entirely to your lifestyle.
+              </p>
+
+              {/* Trust Indicators */}
+              <div className="grid grid-cols-2 gap-y-6 gap-x-8 mb-14 max-w-lg">
+                {[
+                  "Ready to Move",
+                  "Premium Amenities",
+                  "RERA Approved",
+                  "Exclusive Inventory"
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-[#D4AF37]" strokeWidth={3} />
+                    </div>
+                    <span className="text-sm text-zinc-300 font-light">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Floating Contact Card */}
+              <motion.div
+                whileHover={{ y: -5 }}
+                className="inline-flex items-center gap-6 p-6 rounded-2xl bg-[#121212]/80 border border-white/5 backdrop-blur-md shadow-2xl"
+              >
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#D4AF37] to-[#A68A27] flex items-center justify-center shadow-lg shadow-[#D4AF37]/20">
+                  <PhoneCall className="w-6 h-6 text-black" fill="currentColor" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-semibold mb-1">Direct Line</p>
+                  <p className="text-xl font-serif text-white tracking-wide">+91 98765 43210</p>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+
+          {/* RIGHT SIDE (Glassmorphism Form) */}
+          <div className="lg:col-span-5 h-full flex items-center justify-center lg:justify-end mt-12 lg:mt-0">
+            <LuxuryContactForm />
+          </div>
+
+        </div>
+      </section>
+
+      {/* Premium Luxury Footer */}
+      <LuxuryFooter />
     </div>
   );
 }

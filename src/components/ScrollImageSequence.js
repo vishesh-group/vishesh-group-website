@@ -73,7 +73,10 @@ export default function ScrollImageSequence({
       loadedImages.push(img);
     }
 
-    setImages(loadedImages);
+    // Using setTimeout to avoid React's set-state-in-effect cascading render warning
+    setTimeout(() => {
+      if (active) setImages(loadedImages);
+    }, 0);
 
     return () => {
       active = false;
@@ -268,51 +271,81 @@ export default function ScrollImageSequence({
           className="w-full h-full block max-w-full max-h-full animate-premium-pulse"
         />
 
-        {/* Dark overlay for rich contrast, ensuring text visibility on light frames */}
-        <div className="absolute inset-0 bg-black/50 z-10 pointer-events-none" />
+        {/* Refined gradient overlay — protects text without hiding the visuals */}
+        <div className="absolute inset-0 z-10 pointer-events-none">
+          {/* Base contrast layer */}
+          <div className="absolute inset-0 bg-black/40" />
+          {/* Left gradient for left-positioned text */}
+          <div className="absolute inset-y-0 left-0 w-3/5 bg-gradient-to-r from-black/60 via-black/20 to-transparent hidden md:block" />
+          {/* Right gradient for right-positioned text */}
+          <div className="absolute inset-y-0 right-0 w-3/5 bg-gradient-to-l from-black/60 via-black/20 to-transparent hidden md:block" />
+          {/* Bottom vignette */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
+        </div>
 
-        {/* Cinematic Staggered Text Overlays (Left and Right, skipping Center) */}
+        {/* Cinematic Staggered Text Overlays */}
         {!isLoading && (
           <div className="absolute inset-0 z-20 pointer-events-none flex items-center">
-            <div className="mx-auto max-w-[1400px] w-full px-6 md:px-12 relative h-full flex items-center">
+            <div className="mx-auto max-w-[1400px] w-full px-5 md:px-12 relative h-full flex items-center">
 
-              {/* Text 1: Left Side */}
-              <div className="scroll-text-1 absolute left-6 md:left-12 max-w-[380px] text-left opacity-0 pointer-events-none">
-                <span className="text-[11px] uppercase tracking-[0.3em] text-gold font-bold mb-2.5 block">
-                  01 / ARCHITECTURE
-                </span>
-                <h3 className="text-3xl md:text-4xl font-serif text-white mb-4 leading-tight font-medium">
-                  Iconic Structural Design
+              {/* Text 1: Left Side (Desktop) / Centered (Mobile) */}
+              <div className="scroll-text-1 absolute left-5 md:left-12 right-5 md:right-auto max-w-full md:max-w-[580px] text-center md:text-left opacity-0 pointer-events-none">
+                <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
+                  <div className="h-px w-8 bg-gold/60 hidden md:block" />
+                  <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gold font-semibold">
+                    01 / Architecture
+                  </span>
+                </div>
+                <h3 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white mb-5 leading-[1.15] font-medium tracking-tight">
+                  Iconic <span className="text-gold">Structural</span> Design
                 </h3>
-                <p className="text-zinc-400 text-sm font-light leading-relaxed">
-                  Rising 30 stories, Balaji Symphony stands as a signature skyline landmark in Panvel, matching advanced steel engineering with natural biological energy loops.
+                <p className="text-zinc-300 text-sm md:text-base font-light leading-[1.8] max-w-[500px] mx-auto md:mx-0">
+                  Rising 30 stories, Balaji Symphony stands as a signature skyline landmark in Panvel, matching <span className="text-white/90 font-medium">advanced steel engineering</span> with natural biological energy loops.
                 </p>
+                <div className="mt-6 flex items-center gap-3 justify-center md:justify-start">
+                  <div className="h-px w-12 bg-gradient-to-r from-gold to-transparent" />
+                  <div className="w-1.5 h-1.5 rotate-45 bg-gold/50" />
+                </div>
               </div>
 
-              {/* Text 2: Right Side */}
-              <div className="scroll-text-2 absolute right-6 md:right-12 max-w-[380px] text-left opacity-0 pointer-events-none">
-                <span className="text-[11px] uppercase tracking-[0.3em] text-gold font-bold mb-2.5 block">
-                  02 / EXPERIENCE
-                </span>
-                <h3 className="text-3xl md:text-4xl font-serif text-white mb-4 leading-tight font-medium">
-                  Elevated Sky Life
+              {/* Text 2: Right Side (Desktop) / Centered (Mobile) */}
+              <div className="scroll-text-2 absolute right-5 md:right-12 left-5 md:left-auto max-w-full md:max-w-[580px] text-center md:text-left opacity-0 pointer-events-none">
+                <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
+                  <div className="h-px w-8 bg-gold/60 hidden md:block" />
+                  <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gold font-semibold">
+                    02 / Experience
+                  </span>
+                </div>
+                <h3 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white mb-5 leading-[1.15] font-medium tracking-tight">
+                  Elevated <span className="text-gold">Sky</span> Life
                 </h3>
-                <p className="text-zinc-400 text-sm font-light leading-relaxed">
-                  Float above Navi Mumbai in our unique rooftop sky garden. Indulge in hospitality-level recreation with viewing galleries suspended 300 feet above the ground.
+                <p className="text-zinc-300 text-sm md:text-base font-light leading-[1.8] max-w-[500px] mx-auto md:mx-0">
+                  Float above Navi Mumbai in our unique <span className="text-white/90 font-medium">rooftop sky garden</span>. Indulge in hospitality-level recreation with viewing galleries suspended 300 feet above the ground.
                 </p>
+                <div className="mt-6 flex items-center gap-3 justify-center md:justify-start">
+                  <div className="h-px w-12 bg-gradient-to-r from-gold to-transparent" />
+                  <div className="w-1.5 h-1.5 rotate-45 bg-gold/50" />
+                </div>
               </div>
 
-              {/* Text 3: Left Side */}
-              <div className="scroll-text-3 absolute left-6 md:left-12 max-w-[380px] text-left opacity-0 pointer-events-none">
-                <span className="text-[11px] uppercase tracking-[0.3em] text-gold font-bold mb-2.5 block">
-                  03 / LIVING
-                </span>
-                <h3 className="text-3xl md:text-4xl font-serif text-white mb-4 leading-tight font-medium">
-                  Crafting A Sustainable Legacy
+              {/* Text 3: Left Side (Desktop) / Centered (Mobile) */}
+              <div className="scroll-text-3 absolute left-5 md:left-12 right-5 md:right-auto max-w-full md:max-w-[580px] text-center md:text-left opacity-0 pointer-events-none">
+                <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
+                  <div className="h-px w-8 bg-gold/60 hidden md:block" />
+                  <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gold font-semibold">
+                    03 / Living
+                  </span>
+                </div>
+                <h3 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white mb-5 leading-[1.15] font-medium tracking-tight">
+                  Crafting A <span className="text-gold">Sustainable</span> Legacy
                 </h3>
-                <p className="text-zinc-400 text-sm font-light leading-relaxed">
-                  Vishesh Group merges luxurious residential design with green features like biological waste recycling, setting new benchmarks in quality and craftsmanship.
+                <p className="text-zinc-300 text-sm md:text-base font-light leading-[1.8] max-w-[500px] mx-auto md:mx-0">
+                  Vishesh Group merges <span className="text-white/90 font-medium">luxurious residential design</span> with green features like biological waste recycling, setting new benchmarks in quality and craftsmanship.
                 </p>
+                <div className="mt-6 flex items-center gap-3 justify-center md:justify-start">
+                  <div className="h-px w-12 bg-gradient-to-r from-gold to-transparent" />
+                  <div className="w-1.5 h-1.5 rotate-45 bg-gold/50" />
+                </div>
               </div>
 
             </div>

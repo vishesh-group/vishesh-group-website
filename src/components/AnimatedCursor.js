@@ -41,7 +41,7 @@ export default function AnimatedCursor() {
 
     // Initial check for visibility if cursor is already on screen
     if (document.hasFocus()) {
-      setIsVisible(true);
+      setTimeout(() => setIsVisible(true), 0);
     }
 
     return () => {
