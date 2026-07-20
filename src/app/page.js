@@ -13,7 +13,7 @@ import LeadForm from "../components/LeadForm";
 import LuxuryContactForm from "../components/LuxuryContactForm";
 import LuxuryFooter from "../components/LuxuryFooter";
 import LuxuryAboutSection from "../components/LuxuryAboutSection";
-import { Check, PhoneCall } from "lucide-react";
+import { Check, PhoneCall, ArrowUpRight, MapPin, Building2, Sparkles } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -45,6 +45,23 @@ const AnimatedStat = ({ value }) => {
 
   return <span ref={ref}>0{suffix}</span>;
 };
+
+const LineReveal = ({ children, className = "", delay = 0 }) => (
+  <div className={`overflow-hidden ${className}`}>
+    <motion.div
+      initial={{ y: "100%", opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{
+        duration: 1,
+        delay,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+    >
+      {children}
+    </motion.div>
+  </div>
+);
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -354,172 +371,386 @@ export default function Home() {
         />
       </div>
 
-      {/* Ongoing Projects Section */}
-      <section id="projects" className="py-16 md:py-32 bg-zinc-950 text-white relative overflow-hidden">
-        {/* Subtle decorative elements, like soft gold glow circles */}
-        <div className="absolute top-1/4 left-[10%] w-96 h-96 bg-gold/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-[10%] w-96 h-96 bg-gold/5 rounded-full blur-[120px] pointer-events-none" />
+      {/* ═══════════════════════════════════════════════ */}
+      {/* RESIDENTIAL PROJECTS — Premium Showcase        */}
+      {/* ═══════════════════════════════════════════════ */}
+      <section id="projects" className="py-20 md:py-36 bg-[#FAF8F4] text-[#111111] relative overflow-hidden">
+        {/* Ambient Glow */}
+        <div className="absolute top-1/4 left-[10%] w-96 h-96 bg-[#C9A227]/8 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-[10%] w-96 h-96 bg-[#E8D6A8]/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.015] bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:6rem_6rem] pointer-events-none" />
 
         <div className="mx-auto max-w-[1400px] w-full px-6 md:px-12 relative z-10">
 
-          {/* Header */}
-          <div className="text-center mb-16 md:mb-20">
-            <span className="text-xs uppercase tracking-[0.35em] text-gold font-semibold mb-4 block">
-              ONGOING REAL ESTATE PROJECTS IN NAVI MUMBAI
-            </span>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-white leading-tight">
-              Residential Projects
-            </h2>
+          {/* Section Header */}
+          <div className="text-center mb-20 md:mb-28 flex flex-col items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="flex items-center gap-4 mb-6"
+            >
+              <div className="h-px w-12 bg-[#C9A227]/50" />
+              <span className="text-[10px] uppercase tracking-[0.4em] text-[#C9A227] font-semibold">
+                Ongoing Projects in Navi Mumbai
+              </span>
+              <div className="h-px w-12 bg-[#C9A227]/50" />
+            </motion.div>
+            <div className="text-4xl md:text-6xl lg:text-7xl font-serif font-light tracking-tight text-[#111111] leading-[1.05]">
+              <LineReveal delay={0.1}>Residential</LineReveal>
+              <LineReveal delay={0.25}>
+                <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#C9A227] to-[#E8D6A8]">Projects</span>
+              </LineReveal>
+            </div>
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-sm md:text-base text-[#888888] font-light leading-relaxed max-w-lg mt-6"
+            >
+              Explore our signature developments redefining luxury living across Navi Mumbai&#39;s most coveted addresses.
+            </motion.p>
           </div>
 
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
-            {ongoingProjects.map((project, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: idx * 0.15, ease: "easeOut" }}
-                className="group flex flex-col bg-zinc-900/40 rounded-2xl border border-zinc-800/60 overflow-hidden hover:border-gold/45 hover:bg-zinc-900/70 transition-all duration-500 hover:shadow-2xl hover:shadow-gold/5"
-              >
-                {/* Image Container with zoom & gradient fade */}
-                <div className="relative h-[280px] md:h-[380px] w-full overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                  {/* Subtle dark gradient overlay on image */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-80" />
+          {/* ── FEATURED PROJECT (First Card — Hero Layout) ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-8 lg:mb-10"
+          >
+            <Link href={ongoingProjects[0].href} className="group block">
+              <div className="relative bg-white rounded-[2rem] overflow-hidden border border-[rgba(0,0,0,0.04)] shadow-[0_4px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_60px_-15px_rgba(201,162,39,0.15)] transition-all duration-700 hover:-translate-y-1">
+                <div className="grid grid-cols-1 lg:grid-cols-2">
+                  {/* Image Side */}
+                  <div className="relative h-[320px] md:h-[420px] lg:h-[520px] overflow-hidden">
+                    <Image
+                      src={ongoingProjects[0].image}
+                      alt={ongoingProjects[0].title}
+                      fill
+                      className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/10 lg:bg-gradient-to-r lg:from-transparent lg:to-white/30" />
+                    {/* Project Number */}
+                    <div className="absolute top-6 left-6 z-10">
+                      <span className="text-[80px] md:text-[100px] font-serif font-bold text-white/10 leading-none select-none">01</span>
+                    </div>
+                    {/* Location Pill */}
+                    <div className="absolute bottom-6 left-6 z-10">
+                      <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 backdrop-blur-xl border border-white/10">
+                        <MapPin className="w-3.5 h-3.5 text-[#C9A227]" strokeWidth={2} />
+                        <span className="text-[11px] uppercase tracking-[0.15em] text-white/90 font-medium">
+                          {ongoingProjects[0].location}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
 
-                  {/* Location overlay at the bottom of the image */}
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <span className="text-xs uppercase tracking-[0.2em] text-gold font-semibold block mb-1">
-                      {project.location}
-                    </span>
-                    <h3 className="text-xl md:text-2xl font-serif text-white font-medium">
-                      {project.title}
+                  {/* Content Side */}
+                  <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="h-px w-8 bg-[#C9A227]/50" />
+                      <span className="text-[10px] uppercase tracking-[0.3em] text-[#C9A227] font-semibold">Featured Project</span>
+                    </div>
+
+                    <h3 className="text-3xl md:text-4xl lg:text-5xl font-serif text-[#111111] font-light tracking-tight mb-5 leading-[1.1] group-hover:text-[#C9A227] transition-colors duration-500">
+                      {ongoingProjects[0].title}
                     </h3>
+
+                    <p className="text-[15px] text-[#777777] font-light leading-[1.9] mb-10 max-w-md">
+                      {ongoingProjects[0].description}
+                    </p>
+
+                    {/* Mini Stats */}
+                    <div className="flex items-center gap-8 mb-10">
+                      {[
+                        { val: "30", label: "Storeys" },
+                        { val: "1-3", label: "BHK" },
+                        { val: "Sky", label: "Amenities" },
+                      ].map((stat, i) => (
+                        <div key={i} className="text-center">
+                          <p className="text-2xl font-serif text-[#C9A227] font-medium">{stat.val}</p>
+                          <p className="text-[10px] uppercase tracking-[0.2em] text-[#999999] mt-1">{stat.label}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-[#111111] text-white text-[11px] tracking-[0.2em] uppercase font-semibold group-hover:bg-[#C9A227] group-hover:text-black transition-all duration-500 w-fit shadow-lg">
+                      Explore Project
+                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-400" strokeWidth={2} />
+                    </div>
                   </div>
                 </div>
+              </div>
+            </Link>
+          </motion.div>
 
-                {/* Details Container */}
-                <div className="p-6 flex flex-col flex-grow justify-between">
-                  <p className="text-sm text-zinc-400 font-light leading-relaxed mb-6">
-                    {project.description}
-                  </p>
+          {/* ── REMAINING PROJECTS (2-Column Grid) ── */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+            {ongoingProjects.slice(1).map((project, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.9, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Link href={project.href} className="group block">
+                  <div className="relative bg-white rounded-[2rem] overflow-hidden border border-[rgba(0,0,0,0.04)] shadow-[0_4px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_60px_-15px_rgba(201,162,39,0.15)] transition-all duration-700 hover:-translate-y-1">
+                    {/* Image */}
+                    <div className="relative h-[260px] md:h-[300px] overflow-hidden">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
-                  <Link
-                    href={project.href}
-                    className="w-full py-3.5 rounded-lg border border-zinc-800/80 hover:border-gold text-center text-xs tracking-widest uppercase font-semibold text-gold hover:bg-gold hover:text-black transition-all duration-300"
-                  >
-                    View Details
-                  </Link>
-                </div>
+                      {/* Project Number */}
+                      <div className="absolute top-5 left-6 z-10">
+                        <span className="text-[70px] font-serif font-bold text-white/10 leading-none select-none">0{idx + 2}</span>
+                      </div>
+
+                      {/* Location Pill */}
+                      <div className="absolute bottom-5 left-5 z-10">
+                        <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 backdrop-blur-xl border border-white/10">
+                          <MapPin className="w-3 h-3 text-[#C9A227]" strokeWidth={2} />
+                          <span className="text-[10px] uppercase tracking-[0.15em] text-white/90 font-medium">
+                            {project.location}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Arrow Badge */}
+                      <div className="absolute top-5 right-5 z-10">
+                        <div className="w-11 h-11 rounded-full bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-[#C9A227] group-hover:border-[#C9A227] transition-all duration-500">
+                          <ArrowUpRight className="w-4.5 h-4.5 text-white group-hover:text-black transition-colors duration-500" strokeWidth={1.5} />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-7 md:p-8">
+                      <h3 className="text-2xl md:text-3xl font-serif text-[#111111] font-light tracking-tight mb-3 leading-tight group-hover:text-[#C9A227] transition-colors duration-500">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-[#888888] font-light leading-[1.8] mb-7">
+                        {project.description}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] uppercase tracking-[0.25em] text-[#C9A227] font-semibold">
+                          View Details
+                        </span>
+                        <div className="h-px flex-1 mx-6 bg-[rgba(0,0,0,0.04)]" />
+                        <span className="text-[10px] uppercase tracking-[0.15em] text-[#BBBBBB] font-medium">
+                          Premium
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </div>
 
-          {/* Footer Call-To-Action Button */}
-          <div className="flex justify-center mt-16 md:mt-20">
+          {/* Bottom CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex justify-center mt-20 md:mt-24"
+          >
             <Link
               href="#projects"
-              className="group flex items-center gap-3 px-8 py-4 rounded-full bg-gold text-black font-semibold text-xs tracking-widest uppercase hover:bg-white hover:scale-105 transition-all duration-300 shadow-lg shadow-gold/10"
+              className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full bg-[#111111] text-white font-semibold text-[11px] tracking-[0.2em] uppercase overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_-12px_rgba(201,162,39,0.4)] hover:-translate-y-0.5"
             >
-              View All Projects
-              <svg
-                className="w-4.5 h-4.5 group-hover:translate-x-1 transition-transform duration-300"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
+              <span className="relative z-10">Explore All Projects</span>
+              <ArrowUpRight className="w-4 h-4 relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-500" strokeWidth={2} />
+              {/* Sweep */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#C9A227] to-[#E8D6A8] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+              <span className="absolute inset-0 flex items-center justify-center gap-3 text-[#111111] font-semibold text-[11px] tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 z-20">
+                Explore All Projects
+                <ArrowUpRight className="w-4 h-4" strokeWidth={2} />
+              </span>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ULTRA LUXURY Lead Generation Section */}
-      <section id="contact" className="py-24 md:py-32 relative bg-[#090909] overflow-hidden">
+      {/* ═══════════════════════════════════════════════ */}
+      {/* SCHEDULE YOUR PRIVATE TOUR — Premium CTA      */}
+      {/* ═══════════════════════════════════════════════ */}
+      <section id="contact" className="py-28 md:py-44 relative bg-[#FAF8F4] overflow-hidden">
 
-        {/* Subtly Animated Particles / Background Layers */}
+        {/* Background Layers */}
         <div className="absolute inset-0 z-0 pointer-events-none">
-          {/* Architectural Grid */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
-
-          {/* Radial Gradients & Vignette */}
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#D4AF37]/5 rounded-full blur-[150px]" />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#D4AF37]/5 rounded-full blur-[120px]" />
-          <div className="absolute inset-0 bg-black/40 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black_100%)]" />
+          <div className="absolute inset-0 opacity-[0.015] bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+          <div className="absolute top-0 right-0 w-[900px] h-[900px] bg-[#C9A227]/5 rounded-full blur-[200px]" />
+          <div className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-[#E8D6A8]/6 rounded-full blur-[160px]" />
+          {/* Geometric accents */}
+          <div className="absolute top-40 right-24 w-80 h-80 border border-[#C9A227]/[0.03] rotate-45 rounded-[3rem] hidden lg:block" />
+          <div className="absolute bottom-40 left-20 w-52 h-52 border border-[#C9A227]/[0.025] rotate-12 rounded-2xl hidden lg:block" />
         </div>
 
-        <div className="mx-auto max-w-[1400px] w-full px-6 md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
+        <div className="mx-auto max-w-[1400px] w-full px-6 md:px-12 relative z-10">
 
-          {/* LEFT SIDE (Luxury Content) */}
-          <div className="lg:col-span-7 flex flex-col justify-center h-full">
+          {/* Top Section Badge — Centered */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex items-center justify-center gap-4 mb-6"
+          >
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="h-px w-8 bg-[#D4AF37]/60" />
-                <span className="text-[11px] uppercase tracking-[0.4em] text-[#D4AF37] font-semibold">
-                  EXPERIENCE LUXURY
-                </span>
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.3 }}
+              className="h-px w-16 bg-gradient-to-r from-transparent to-[#C9A227]/50 origin-right"
+            />
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-[#C9A227]/8 border border-[#C9A227]/15 flex items-center justify-center">
+                <Sparkles className="w-3.5 h-3.5 text-[#C9A227]" strokeWidth={1.5} />
+              </div>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-[#C9A227] font-semibold">
+                Experience Luxury
+              </span>
+            </div>
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.3 }}
+              className="h-px w-16 bg-gradient-to-l from-transparent to-[#C9A227]/50 origin-left"
+            />
+          </motion.div>
+
+          {/* Two-Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+
+            {/* LEFT SIDE — Content */}
+            <div className="lg:col-span-7 flex flex-col justify-center">
+
+              {/* Heading */}
+              <div className="text-4xl md:text-5xl lg:text-[4.5rem] font-serif text-[#111111] leading-[1.06] mb-8 font-light tracking-tight">
+                <LineReveal delay={0.05}>Schedule Your</LineReveal>
+                <LineReveal delay={0.2}>
+                  Private <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#C9A227] to-[#E8D6A8]">Tour.</span>
+                </LineReveal>
               </div>
 
-              <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif text-white leading-[1.1] mb-8 font-light tracking-tight">
-                Schedule Your <br className="hidden md:block" /> Private Tour.
-              </h2>
-
-              <p className="text-base md:text-lg text-[#B7B7B7] font-light leading-relaxed mb-12 max-w-xl">
-                Discover a world where architectural grandeur meets timeless elegance. Leave your details below and our exclusive relationship manager will orchestrate a personalized viewing experience tailored entirely to your lifestyle.
-              </p>
-
-              {/* Trust Indicators */}
-              <div className="grid grid-cols-2 gap-y-6 gap-x-8 mb-14 max-w-lg">
-                {[
-                  "Ready to Move",
-                  "Premium Amenities",
-                  "RERA Approved",
-                  "Exclusive Inventory"
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3 h-3 text-[#D4AF37]" strokeWidth={3} />
-                    </div>
-                    <span className="text-sm text-zinc-300 font-light">{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Floating Contact Card */}
+              {/* Decorative line under heading */}
               <motion.div
-                whileHover={{ y: -5 }}
-                className="inline-flex items-center gap-6 p-6 rounded-2xl bg-[#121212]/80 border border-white/5 backdrop-blur-md shadow-2xl"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, delay: 0.4, ease: "easeInOut" }}
+                className="h-px w-24 bg-gradient-to-r from-[#C9A227] to-transparent mb-8 origin-left"
+              />
+
+              {/* Description */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-base md:text-[17px] text-[#777777] font-light leading-[1.9] mb-12 max-w-xl"
               >
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#D4AF37] to-[#A68A27] flex items-center justify-center shadow-lg shadow-[#D4AF37]/20">
-                  <PhoneCall className="w-6 h-6 text-black" fill="currentColor" />
-                </div>
-                <div>
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-semibold mb-1">Direct Line</p>
-                  <p className="text-xl font-serif text-white tracking-wide">+91 98765 43210</p>
+                Discover a world where architectural grandeur meets timeless elegance. Leave your details below and our exclusive relationship manager will orchestrate a personalized viewing experience tailored entirely to your lifestyle.
+              </motion.p>
+
+              {/* Trust Indicators — Inline Horizontal Strip */}
+              <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                variants={{
+                  hidden: {},
+                  show: { transition: { staggerChildren: 0.08, delayChildren: 0.5 } }
+                }}
+                className="flex flex-wrap items-center gap-3 mb-12"
+              >
+                {[
+                  { label: "Ready to Move", icon: Check },
+                  { label: "Premium Amenities", icon: Building2 },
+                  { label: "RERA Approved", icon: Check },
+                  { label: "Exclusive Inventory", icon: Sparkles }
+                ].map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.9, y: 10 },
+                      show: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
+                    }}
+                    className="group flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/70 border border-[rgba(0,0,0,0.04)] backdrop-blur-sm hover:bg-white hover:shadow-[0_4px_20px_rgba(201,162,39,0.1)] hover:border-[#C9A227]/15 transition-all duration-500"
+                  >
+                    <div className="w-5 h-5 rounded-full bg-[#C9A227]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#C9A227]/20 transition-colors duration-400">
+                      <item.icon className="w-2.5 h-2.5 text-[#C9A227]" strokeWidth={3} />
+                    </div>
+                    <span className="text-[11px] text-[#555555] font-medium tracking-wide">{item.label}</span>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              {/* Contact Info Row */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
+              >
+                {/* Phone Card */}
+                <motion.a
+                  href="tel:+919876543210"
+                  whileHover={{ y: -3 }}
+                  className="inline-flex items-center gap-4 px-6 py-4 rounded-2xl bg-white border border-[rgba(0,0,0,0.04)] shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(201,162,39,0.12)] transition-all duration-500"
+                >
+                  <div className="relative">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#C9A227]/12 to-[#E8D6A8]/8 border border-[#C9A227]/12 flex items-center justify-center">
+                      <PhoneCall className="w-5 h-5 text-[#C9A227]" strokeWidth={1.5} />
+                    </div>
+                    {/* Pulsing ring */}
+                    <motion.div
+                      animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0, 0.3] }}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                      className="absolute inset-0 border border-[#C9A227]/20 rounded-xl"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-[9px] text-[#AAAAAA] uppercase tracking-[0.2em] font-semibold mb-0.5">Direct Line</p>
+                    <p className="text-lg font-serif text-[#111111] tracking-wide font-medium">+91 98765 43210</p>
+                  </div>
+                </motion.a>
+
+                {/* Hours */}
+                <div className="flex items-center gap-3 text-[#999999]">
+                  <div className="w-1 h-1 rounded-full bg-[#C9A227]/40" />
+                  <span className="text-[12px] font-light">Mon – Sat, 10 AM – 7 PM</span>
                 </div>
               </motion.div>
+            </div>
+
+            {/* RIGHT SIDE — Form */}
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 1.1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-5 flex items-center justify-center lg:justify-end"
+            >
+              <LuxuryContactForm />
             </motion.div>
-          </div>
 
-          {/* RIGHT SIDE (Glassmorphism Form) */}
-          <div className="lg:col-span-5 h-full flex items-center justify-center lg:justify-end mt-12 lg:mt-0">
-            <LuxuryContactForm />
           </div>
-
         </div>
       </section>
 

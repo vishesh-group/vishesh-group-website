@@ -106,6 +106,10 @@ export default function ScrollImageSequence({
       if (!imgWidth || !imgHeight) return;
 
       context.clearRect(0, 0, canvasWidth, canvasHeight);
+      
+      // Enable high-quality image smoothing
+      context.imageSmoothingEnabled = true;
+      context.imageSmoothingQuality = "high";
 
       // Math for centering and maintaining aspect ratio
       const scale = objectFit === "cover"
@@ -121,8 +125,10 @@ export default function ScrollImageSequence({
     // Resize handler to match screen dimensions and screen resolution (pixel ratio)
     const resizeCanvas = () => {
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * (window.devicePixelRatio || 1);
-      canvas.height = rect.height * (window.devicePixelRatio || 1);
+      // Cap DPR to 2 for performance on mobile devices (e.g., iPhones with 3x)
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
 
       // Immediately draw the active frame on resize
       drawFrame(currentFrameRef.current);
@@ -155,7 +161,7 @@ export default function ScrollImageSequence({
         trigger: containerRef.current,
         start: "top top",
         end: "bottom bottom",
-        scrub: 0.15, // Butter-smooth scrolling delay
+        scrub: 1.2, // 1.2s delay creates a buttery smooth interpolation
         pin: pinRef.current,
         invalidateOnRefresh: true,
         onToggle: (self) => {
@@ -165,7 +171,10 @@ export default function ScrollImageSequence({
           const roundedFrame = Math.round(animObj.frame);
           if (roundedFrame !== currentFrameRef.current) {
             currentFrameRef.current = roundedFrame;
-            drawFrame(roundedFrame);
+            // Use requestAnimationFrame for smoother paint decoupling if scrolling very fast
+            requestAnimationFrame(() => {
+              drawFrame(roundedFrame);
+            });
           }
           // Enforce header hide status on every scroll update to bypass React updates
           toggleHeaderVisibility(!self.isActive);
@@ -269,18 +278,23 @@ export default function ScrollImageSequence({
         <canvas
           ref={canvasRef}
           className="w-full h-full block max-w-full max-h-full animate-premium-pulse"
+          style={{ willChange: "transform", transform: "translateZ(0)" }}
         />
 
         {/* Refined gradient overlay — protects text without hiding the visuals */}
         <div className="absolute inset-0 z-10 pointer-events-none">
           {/* Base contrast layer */}
-          <div className="absolute inset-0 bg-black/40" />
-          {/* Left gradient for left-positioned text */}
-          <div className="absolute inset-y-0 left-0 w-3/5 bg-gradient-to-r from-black/60 via-black/20 to-transparent hidden md:block" />
-          {/* Right gradient for right-positioned text */}
-          <div className="absolute inset-y-0 right-0 w-3/5 bg-gradient-to-l from-black/60 via-black/20 to-transparent hidden md:block" />
-          {/* Bottom vignette */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
+          <div className="absolute inset-0 bg-black/30 md:bg-black/40" />
+          
+          {/* Desktop Side Gradients */}
+          <div className="absolute inset-y-0 left-0 w-3/5 bg-gradient-to-r from-black/70 via-black/20 to-transparent hidden md:block" />
+          <div className="absolute inset-y-0 right-0 w-3/5 bg-gradient-to-l from-black/70 via-black/20 to-transparent hidden md:block" />
+          
+          {/* Mobile Organic Gradient — Smooth fade from bottom up to protect centered text */}
+          <div className="absolute inset-x-0 bottom-0 h-[85%] bg-gradient-to-t from-black/90 via-black/50 to-transparent md:hidden" />
+          
+          {/* Desktop Bottom Vignette */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 hidden md:block" />
         </div>
 
         {/* Cinematic Staggered Text Overlays */}
@@ -289,17 +303,17 @@ export default function ScrollImageSequence({
             <div className="mx-auto max-w-[1400px] w-full px-5 md:px-12 relative h-full flex items-center">
 
               {/* Text 1: Left Side (Desktop) / Centered (Mobile) */}
-              <div className="scroll-text-1 absolute left-5 md:left-12 right-5 md:right-auto max-w-full md:max-w-[580px] text-center md:text-left opacity-0 pointer-events-none">
+              <div className="scroll-text-1 absolute left-5 md:left-12 right-5 md:right-auto max-w-full md:max-w-[580px] text-center md:text-left opacity-0 pointer-events-none drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
                 <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
                   <div className="h-px w-8 bg-gold/60 hidden md:block" />
-                  <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gold font-semibold">
+                  <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gold font-semibold drop-shadow-md">
                     01 / Architecture
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white mb-5 leading-[1.15] font-medium tracking-tight">
+                <h3 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white mb-5 leading-[1.15] font-medium tracking-tight drop-shadow-xl">
                   Iconic <span className="text-gold">Structural</span> Design
                 </h3>
-                <p className="text-zinc-300 text-sm md:text-base font-light leading-[1.8] max-w-[500px] mx-auto md:mx-0">
+                <p className="text-zinc-200 text-sm md:text-base font-light leading-[1.8] max-w-[500px] mx-auto md:mx-0 drop-shadow-lg">
                   Rising 30 stories, Balaji Symphony stands as a signature skyline landmark in Panvel, matching <span className="text-white/90 font-medium">advanced steel engineering</span> with natural biological energy loops.
                 </p>
                 <div className="mt-6 flex items-center gap-3 justify-center md:justify-start">
@@ -309,17 +323,17 @@ export default function ScrollImageSequence({
               </div>
 
               {/* Text 2: Right Side (Desktop) / Centered (Mobile) */}
-              <div className="scroll-text-2 absolute right-5 md:right-12 left-5 md:left-auto max-w-full md:max-w-[580px] text-center md:text-left opacity-0 pointer-events-none">
+              <div className="scroll-text-2 absolute right-5 md:right-12 left-5 md:left-auto max-w-full md:max-w-[580px] text-center md:text-left opacity-0 pointer-events-none drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
                 <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
                   <div className="h-px w-8 bg-gold/60 hidden md:block" />
-                  <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gold font-semibold">
+                  <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gold font-semibold drop-shadow-md">
                     02 / Experience
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white mb-5 leading-[1.15] font-medium tracking-tight">
+                <h3 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white mb-5 leading-[1.15] font-medium tracking-tight drop-shadow-xl">
                   Elevated <span className="text-gold">Sky</span> Life
                 </h3>
-                <p className="text-zinc-300 text-sm md:text-base font-light leading-[1.8] max-w-[500px] mx-auto md:mx-0">
+                <p className="text-zinc-200 text-sm md:text-base font-light leading-[1.8] max-w-[500px] mx-auto md:mx-0 drop-shadow-lg">
                   Float above Navi Mumbai in our unique <span className="text-white/90 font-medium">rooftop sky garden</span>. Indulge in hospitality-level recreation with viewing galleries suspended 300 feet above the ground.
                 </p>
                 <div className="mt-6 flex items-center gap-3 justify-center md:justify-start">
@@ -329,17 +343,17 @@ export default function ScrollImageSequence({
               </div>
 
               {/* Text 3: Left Side (Desktop) / Centered (Mobile) */}
-              <div className="scroll-text-3 absolute left-5 md:left-12 right-5 md:right-auto max-w-full md:max-w-[580px] text-center md:text-left opacity-0 pointer-events-none">
+              <div className="scroll-text-3 absolute left-5 md:left-12 right-5 md:right-auto max-w-full md:max-w-[580px] text-center md:text-left opacity-0 pointer-events-none drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
                 <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
                   <div className="h-px w-8 bg-gold/60 hidden md:block" />
-                  <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gold font-semibold">
+                  <span className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gold font-semibold drop-shadow-md">
                     03 / Living
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white mb-5 leading-[1.15] font-medium tracking-tight">
+                <h3 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white mb-5 leading-[1.15] font-medium tracking-tight drop-shadow-xl">
                   Crafting A <span className="text-gold">Sustainable</span> Legacy
                 </h3>
-                <p className="text-zinc-300 text-sm md:text-base font-light leading-[1.8] max-w-[500px] mx-auto md:mx-0">
+                <p className="text-zinc-200 text-sm md:text-base font-light leading-[1.8] max-w-[500px] mx-auto md:mx-0 drop-shadow-lg">
                   Vishesh Group merges <span className="text-white/90 font-medium">luxurious residential design</span> with green features like biological waste recycling, setting new benchmarks in quality and craftsmanship.
                 </p>
                 <div className="mt-6 flex items-center gap-3 justify-center md:justify-start">
