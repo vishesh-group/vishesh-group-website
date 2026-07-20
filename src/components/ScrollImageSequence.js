@@ -106,7 +106,7 @@ export default function ScrollImageSequence({
       if (!imgWidth || !imgHeight) return;
 
       context.clearRect(0, 0, canvasWidth, canvasHeight);
-      
+
       // Enable high-quality image smoothing
       context.imageSmoothingEnabled = true;
       context.imageSmoothingQuality = "high";
@@ -285,14 +285,14 @@ export default function ScrollImageSequence({
         <div className="absolute inset-0 z-10 pointer-events-none">
           {/* Base contrast layer */}
           <div className="absolute inset-0 bg-black/30 md:bg-black/40" />
-          
+
           {/* Desktop Side Gradients */}
           <div className="absolute inset-y-0 left-0 w-3/5 bg-gradient-to-r from-black/70 via-black/20 to-transparent hidden md:block" />
           <div className="absolute inset-y-0 right-0 w-3/5 bg-gradient-to-l from-black/70 via-black/20 to-transparent hidden md:block" />
-          
+
           {/* Mobile Organic Gradient — Smooth fade from bottom up to protect centered text */}
           <div className="absolute inset-x-0 bottom-0 h-[85%] bg-gradient-to-t from-black/90 via-black/50 to-transparent md:hidden" />
-          
+
           {/* Desktop Bottom Vignette */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 hidden md:block" />
         </div>

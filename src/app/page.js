@@ -13,6 +13,7 @@ import LeadForm from "../components/LeadForm";
 import LuxuryContactForm from "../components/LuxuryContactForm";
 import LuxuryFooter from "../components/LuxuryFooter";
 import LuxuryAboutSection from "../components/LuxuryAboutSection";
+import WhyChooseUs from "../components/WhyChooseUs";
 import { Check, PhoneCall, ArrowUpRight, MapPin, Building2, Sparkles } from "lucide-react";
 
 if (typeof window !== "undefined") {
@@ -172,40 +173,60 @@ export default function Home() {
     }
   }, [progress, nextSlide]);
 
-  // 4. Contact Section GSAP Animation
+  // 4. Advanced GSAP Parallax & Scroll Animations
   useEffect(() => {
-    if (contactSectionRef.current) {
-      gsap.fromTo(
-        contactTextRef.current,
-        { opacity: 0, x: -40 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: contactSectionRef.current,
-            start: "top 80%",
-          }
+    // Parallax on Ambient Background Glows
+    gsap.utils.toArray('.gsap-parallax-bg').forEach((bg) => {
+      gsap.to(bg, {
+        yPercent: 30, // Moves slightly slower than scroll
+        ease: "none",
+        scrollTrigger: {
+          trigger: bg.parentElement,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.5,
         }
-      );
+      });
+    });
 
-      gsap.fromTo(
-        contactFormRef.current,
-        { opacity: 0, x: 40 },
+    // Parallax on Images inside Project Cards
+    gsap.utils.toArray('.gsap-parallax-img').forEach((img) => {
+      gsap.fromTo(img,
+        { scale: 1.15, yPercent: -8 },
         {
-          opacity: 1,
-          x: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          delay: 0.2,
+          scale: 1.05, // keep a slight scale for hover effect buffer
+          yPercent: 8,
+          ease: "none",
           scrollTrigger: {
-            trigger: contactSectionRef.current,
-            start: "top 80%",
+            trigger: img.parentElement.parentElement, // Card container
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2,
           }
         }
       );
-    }
+    });
+
+    // Parallax on Geometric Floating Shapes in Contact Section
+    gsap.utils.toArray('.gsap-parallax-shape').forEach((shape, i) => {
+      gsap.to(shape, {
+        y: (i % 2 === 0) ? -120 : 120,
+        rotate: (i % 2 === 0) ? "+=45" : "-=45", // Spin slowly while scrolling
+        ease: "none",
+        scrollTrigger: {
+          trigger: shape.parentElement.parentElement,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.5,
+        }
+      });
+    });
+
+    // Refresh ScrollTrigger after DOM paints
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 500);
+
   }, []);
 
   return (
@@ -376,8 +397,8 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════ */}
       <section id="projects" className="py-20 md:py-36 bg-[#FAF8F4] text-[#111111] relative overflow-hidden">
         {/* Ambient Glow */}
-        <div className="absolute top-1/4 left-[10%] w-96 h-96 bg-[#C9A227]/8 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-[10%] w-96 h-96 bg-[#E8D6A8]/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="gsap-parallax-bg absolute top-1/4 left-[10%] w-96 h-96 bg-[#C9A227]/8 rounded-full blur-[140px] pointer-events-none" />
+        <div className="gsap-parallax-bg absolute bottom-1/4 right-[10%] w-96 h-96 bg-[#E8D6A8]/10 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute inset-0 opacity-[0.015] bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:6rem_6rem] pointer-events-none" />
 
         <div className="mx-auto max-w-[1400px] w-full px-6 md:px-12 relative z-10">
@@ -431,7 +452,7 @@ export default function Home() {
                       src={ongoingProjects[0].image}
                       alt={ongoingProjects[0].title}
                       fill
-                      className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                      className="gsap-parallax-img object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
                       sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/10 lg:bg-gradient-to-r lg:from-transparent lg:to-white/30" />
@@ -507,7 +528,7 @@ export default function Home() {
                         src={project.image}
                         alt={project.title}
                         fill
-                        className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                        className="gsap-parallax-img object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
@@ -584,6 +605,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Why Choose Us Section */}
+      <WhyChooseUs />
+
       {/* ═══════════════════════════════════════════════ */}
       {/* SCHEDULE YOUR PRIVATE TOUR — Premium CTA      */}
       {/* ═══════════════════════════════════════════════ */}
@@ -592,11 +616,11 @@ export default function Home() {
         {/* Background Layers */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 opacity-[0.015] bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
-          <div className="absolute top-0 right-0 w-[900px] h-[900px] bg-[#C9A227]/5 rounded-full blur-[200px]" />
-          <div className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-[#E8D6A8]/6 rounded-full blur-[160px]" />
+          <div className="gsap-parallax-bg absolute top-0 right-0 w-[900px] h-[900px] bg-[#C9A227]/5 rounded-full blur-[200px]" />
+          <div className="gsap-parallax-bg absolute bottom-0 left-0 w-[700px] h-[700px] bg-[#E8D6A8]/6 rounded-full blur-[160px]" />
           {/* Geometric accents */}
-          <div className="absolute top-40 right-24 w-80 h-80 border border-[#C9A227]/[0.03] rotate-45 rounded-[3rem] hidden lg:block" />
-          <div className="absolute bottom-40 left-20 w-52 h-52 border border-[#C9A227]/[0.025] rotate-12 rounded-2xl hidden lg:block" />
+          <div className="gsap-parallax-shape absolute top-40 right-24 w-80 h-80 border border-[#C9A227]/[0.03] rotate-45 rounded-[3rem] hidden lg:block" />
+          <div className="gsap-parallax-shape absolute bottom-40 left-20 w-52 h-52 border border-[#C9A227]/[0.025] rotate-12 rounded-2xl hidden lg:block" />
         </div>
 
         <div className="mx-auto max-w-[1400px] w-full px-6 md:px-12 relative z-10">
