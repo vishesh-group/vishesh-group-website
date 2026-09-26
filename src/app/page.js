@@ -94,23 +94,44 @@ export default function Home() {
   const ongoingProjects = [
     {
       image: "/Images/Final EVE ROD SIDE VIEW_001.jpg.jpeg",
-      location: "Panvel, Navi Mumbai",
+      location: "Sukhapur, Panvel, Navi Mumbai",
       title: "Balaji Symphony",
       description: "30-Storey Iconic Towers offering ultra-luxurious 1, 1.5, 2 & 3 BHK Smart Homes equipped with sky-amenities.",
       href: "#projects"
     },
     {
-      image: "/Images/Close_Up_View_FFF.jpg.jpeg",
-      location: "Taloja, Navi Mumbai",
+      image: "/Images/Balaji evergreen.png",
+      location: "Sukhapur, Panvel, Navi Mumbai",
       title: "Balaji Evergreen",
       description: "A premium residential landmark with meticulously planned layouts, high-end design, and excellent connectivity.",
       href: "#projects"
     },
     {
-      image: "/Images/Front eve view F.jpg.jpeg",
-      location: "Akurli, Navi Mumbai",
+      image: "/Images/balaji evara.png",
+      location: "Sukhapur, Panvel, Navi Mumbai",
       title: "Balaji Evara",
       description: "Contemporary, eco-friendly residences offering the perfect blend of modern comfort and lush green surroundings.",
+      href: "#projects"
+    },
+    {
+      image: "/Images/Balaji Avvante.png",
+      location: "Sukhapur, Panvel, Navi Mumbai",
+      title: "Balaji Avvante",
+      description: "An iconic residential landmark offering ultra-luxurious homes with premium amenities and excellent connectivity.",
+      href: "#projects"
+    },
+    {
+      image: "/Images/Mellinium 155.png",
+      location: "MBP, Mahape, Navi Mumbai",
+      title: "Millennium 155",
+      description: "Aesthetically designed residential hub equipped with top-tier services and contemporary layouts.",
+      href: "#projects"
+    },
+    {
+      image: "/Images/Olive.png",
+      location: "Sukhapur, Panvel, Navi Mumbai",
+      title: "Balaji Olive",
+      description: "Signature residential ecosystem where architectural grandeur meets timeless design and lifestyle.",
       href: "#projects"
     }
   ];
