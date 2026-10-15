@@ -26,12 +26,19 @@ body {
   overflow-x: hidden;
 }
 
-/* Hide default cursor on devices that support hover */
-@media (hover: hover) and (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
+/* Standard normal browser cursor */
+html, body {
+  cursor: auto !important;
 }
+
+a, button, [role="button"], input[type="submit"], input[type="button"], select, label, summary {
+  cursor: pointer !important;
+}
+
+input[type="text"], input[type="email"], input[type="tel"], textarea {
+  cursor: text !important;
+}
+
 
 /* Premium Navigation Link Underline Animation */
 .nav-link-underline {

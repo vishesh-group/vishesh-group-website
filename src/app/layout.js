@@ -113,7 +113,6 @@ export const metadata = {
   category: "Real Estate",
 };
 
-import AnimatedCursor from "../components/AnimatedCursor";
 import WhatsAppButton from "../components/WhatsAppButton";
 
 export default function RootLayout({ children }) {
@@ -158,7 +157,6 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-white text-zinc-900">
-        <AnimatedCursor />
         {children}
         <WhatsAppButton />
       </body>
