@@ -134,7 +134,7 @@ export default function Header() {
     },
     {
       name: "Education",
-      description: "Fostering academic excellence and holistic development.",
+      description: "GGIS Atha preschool & daycare across Pune, PCMC & Panvel.",
       href: "#education",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -144,7 +144,7 @@ export default function Header() {
     },
     {
       name: "Horticulture",
-      description: "Sustainable farming and eco-conscious botanical solutions.",
+      description: "Curated plant nursery, garden café & landscaping at My Baagaan.",
       href: "#horticulture",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -156,34 +156,35 @@ export default function Header() {
 
   const megaMenuPreviews = [
     {
-      label: "Flagship Residential",
-      title: "The Grand Zenith",
-      description: "Ultra-luxury residential duplexes integrated with biological energy loops.",
-      image: "/Images/Front eve view F.jpg.jpeg",
+      label: "Flagship Residential · Sukhapur, Panvel",
+      title: "Balaji Symphony",
+      description: "30-storey twin towers offering ultra-luxurious 1, 1.5, 2 & 3 BHK Smart Homes with sky-amenities. RERA approved.",
+      image: "/Images/Final EVE ROD SIDE VIEW_001.jpg.jpeg",
       href: "#real-estate"
     },
     {
-      label: "Premium Workspace",
-      title: "Elysium Commercial Hub",
-      description: "Aesthetically crafted corporate hubs equipped with double-skin glass facades.",
-      image: "/Images/Close_Up_View_FFF.jpg.jpeg",
+      label: "Premium Coworking · Mahape, Navi Mumbai",
+      title: "Nextgen Coworking Space",
+      description: "Modern collaborative workspaces and private offices designed for productivity — strategically located in Mahape, Navi Mumbai.",
+      image: "/Images/OfficeSpace.jpg",
       href: "#coworking"
     },
     {
-      label: "Global Education",
-      title: "Vishesh Academy",
-      description: "State-of-the-art educational infrastructure designed for the leaders of tomorrow.",
-      image: "/Images/Close_View_FFF.jpg.jpeg",
+      label: "Early Childhood & Daycare · Pune, PCMC & Panvel",
+      title: "GGIS ATHA Pre School",
+      description: "Leading preschool in Pune and PCMC offering complete early childhood education, preschool learning, and after-school daycare across Pimpri, Bavdhan, Tathawade, Rahatni, Pimple Saudagar, Gangadham, and Panvel.",
+      image: "/Images/Ggisatha.jpg",
       href: "#education"
     },
     {
-      label: "Sustainable Farming",
-      title: "Green Canopy Initiatives",
-      description: "Cultivating organic landscapes and pioneering urban horticulture solutions.",
-      image: "/Images/Front eve view F.jpg.jpeg",
+      label: "Curated Plant Nursery & Café",
+      title: "My Baagaan",
+      description: "Escape the everyday at My Baagaan, where the aroma of fresh coffee mingles with the lush greenery of our curated nursery. Discover a tranquil oasis brimming with indoor and outdoor plants, from vibrant blooms to verdant foliage, stands, pots, and landscaping essentials.",
+      image: "/Images/mybaagaan.jpeg",
       href: "#horticulture"
     }
   ];
+
 
   // Mobile Menu Stagger Variants
   const containerVariants = {
@@ -206,13 +207,11 @@ export default function Header() {
     <>
       <header
         ref={headerRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out opacity-0 ${
-          isHidden ? "!-translate-y-full !opacity-0 !pointer-events-none" : ""
-        } ${
-          scrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out opacity-0 ${isHidden ? "!-translate-y-full !opacity-0 !pointer-events-none" : ""
+          } ${scrolled
             ? "bg-white/80 backdrop-blur-lg h-20 shadow-[0_10px_30px_rgba(0,0,0,0.02)] border-b border-zinc-200/40"
             : "bg-transparent h-24 border-b border-white/10"
-        }`}
+          }`}
       >
         <div className="mx-auto max-w-[1400px] w-full h-full px-6 md:px-12 flex items-center justify-between relative">
 
@@ -248,16 +247,14 @@ export default function Header() {
               >
                 {item.hasMegaMenu ? (
                   <div className="relative h-full flex items-center cursor-pointer">
-                    <button className={`flex items-center gap-1.5 font-medium text-[15px] tracking-wide transition-colors duration-300 relative py-1.5 ${
-                      scrolled ? "text-charcoal hover:text-gold" : "text-white/95 hover:text-gold"
-                    }`}>
+                    <button className={`flex items-center gap-1.5 font-medium text-[15px] tracking-wide transition-colors duration-300 relative py-1.5 ${scrolled ? "text-charcoal hover:text-gold" : "text-white/95 hover:text-gold"
+                      }`}>
                       {item.name}
                       <svg
-                        className={`w-3.5 h-3.5 mt-0.5 transition-transform duration-300 ${
-                          megaMenuOpen 
-                            ? "rotate-180 text-gold" 
-                            : scrolled ? "text-slategray" : "text-white/60"
-                        }`}
+                        className={`w-3.5 h-3.5 mt-0.5 transition-transform duration-300 ${megaMenuOpen
+                          ? "rotate-180 text-gold"
+                          : scrolled ? "text-slategray" : "text-white/60"
+                          }`}
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -306,8 +303,8 @@ export default function Header() {
                                   )}
 
                                   <div className={`flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${activeBizIndex === index
-                                      ? "bg-gold text-white shadow-md shadow-gold/20"
-                                      : "bg-zinc-100 text-charcoal"
+                                    ? "bg-gold text-white shadow-md shadow-gold/20"
+                                    : "bg-zinc-100 text-charcoal"
                                     }`}>
                                     {biz.icon}
                                   </div>
@@ -367,9 +364,8 @@ export default function Header() {
                 ) : (
                   <Link
                     href={item.href}
-                    className={`font-medium text-[15px] tracking-wide transition-colors duration-300 relative py-1.5 ${
-                      scrolled ? "text-charcoal hover:text-gold" : "text-white/95 hover:text-gold"
-                    }`}
+                    className={`font-medium text-[15px] tracking-wide transition-colors duration-300 relative py-1.5 ${scrolled ? "text-charcoal hover:text-gold" : "text-white/95 hover:text-gold"
+                      }`}
                   >
                     {item.name}
                   </Link>
@@ -391,11 +387,10 @@ export default function Header() {
           <div className="hidden lg:flex items-center header-cta opacity-0">
             <Link
               href="#contact"
-              className={`px-6 py-2.5 rounded-full border text-semibold text-xs tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 animate-premium-shine ${
-                scrolled
-                  ? "border-charcoal text-charcoal bg-white hover:bg-charcoal hover:text-white focus-visible:outline-charcoal animate-premium-pulse"
-                  : "border-white/50 text-white bg-transparent hover:bg-white hover:text-charcoal focus-visible:outline-white"
-              }`}
+              className={`px-6 py-2.5 rounded-full border text-semibold text-xs tracking-widest uppercase transition-all duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 animate-premium-shine ${scrolled
+                ? "border-charcoal text-charcoal bg-white hover:bg-charcoal hover:text-white focus-visible:outline-charcoal animate-premium-pulse"
+                : "border-white/50 text-white bg-transparent hover:bg-white hover:text-charcoal focus-visible:outline-white"
+                }`}
             >
               Schedule Visit
             </Link>
@@ -405,9 +400,8 @@ export default function Header() {
           <div className="flex lg:hidden items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`relative w-10 h-10 flex items-center justify-center focus:outline-none rounded-lg transition-colors duration-300 ${
-                (scrolled || mobileMenuOpen) ? "text-charcoal" : "text-white"
-              }`}
+              className={`relative w-10 h-10 flex items-center justify-center focus:outline-none rounded-lg transition-colors duration-300 ${(scrolled || mobileMenuOpen) ? "text-charcoal" : "text-white"
+                }`}
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
             >
