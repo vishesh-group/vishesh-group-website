@@ -35,6 +35,10 @@ export default function Header() {
   // Track open state for desktop mega menu on hover
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
 
+  // Track open state for desktop projects menu on hover
+  const [projectsMenuOpen, setProjectsMenuOpen] = useState(false);
+  const [mobileProjectsOpen, setMobileProjectsOpen] = useState(false);
+
   const headerRef = useRef(null);
   const logoRef = useRef(null);
 
@@ -106,7 +110,7 @@ export default function Header() {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Businesses", href: "/#businesses", hasMegaMenu: true },
-    { name: "Projects", href: "/#projects" },
+    { name: "Projects", href: "/#projects", hasProjectsMenu: true },
     { name: "Careers", href: "/#careers" },
     { name: "Contact", href: "/#contact" },
   ];
@@ -158,7 +162,7 @@ export default function Header() {
     {
       label: "Flagship Residential · Sukhapur, Panvel",
       title: "Balaji Symphony",
-      description: "30-storey twin towers offering ultra-luxurious 1, 1.5, 2 & 3 BHK Smart Homes with sky-amenities. RERA approved.",
+      description: "10-acre township featuring 11 high-rise towers (G+30 to 33 storeys) offering 2, 2.5 & 3 BHK residences with sky-amenities.",
       image: "/Images/Final EVE ROD SIDE VIEW_001.jpg.jpeg",
       href: "#real-estate"
     },
@@ -239,10 +243,12 @@ export default function Header() {
                 onMouseEnter={() => {
                   setHoveredNav(item.name);
                   if (item.hasMegaMenu) setMegaMenuOpen(true);
+                  if (item.hasProjectsMenu) setProjectsMenuOpen(true);
                 }}
                 onMouseLeave={() => {
                   setHoveredNav(null);
                   if (item.hasMegaMenu) setMegaMenuOpen(false);
+                  if (item.hasProjectsMenu) setProjectsMenuOpen(false);
                 }}
               >
                 {item.hasMegaMenu ? (
@@ -357,6 +363,101 @@ export default function Header() {
                             </div>
                           </div>
 
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : item.hasProjectsMenu ? (
+                  <div className="relative h-full flex items-center cursor-pointer">
+                    <Link
+                      href="/#projects"
+                      className={`flex items-center gap-1.5 font-medium text-[15px] tracking-wide transition-colors duration-300 relative py-1.5 ${
+                        scrolled ? "text-charcoal hover:text-gold" : "text-white/95 hover:text-gold"
+                      }`}
+                    >
+                      {item.name}
+                      <svg
+                        className={`w-3.5 h-3.5 mt-0.5 transition-transform duration-300 ${
+                          projectsMenuOpen
+                            ? "rotate-180 text-gold"
+                            : scrolled ? "text-slategray" : "text-white/60"
+                        }`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2.5}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </Link>
+
+                    {/* Framer Motion Projects Dropdown */}
+                    <AnimatePresence>
+                      {projectsMenuOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 15, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                          transition={{ type: "spring", stiffness: 280, damping: 25 }}
+                          className="absolute top-full left-1/2 -translate-x-1/2 w-[340px] bg-white border-t-2 border-t-gold border-x border-b border-zinc-100 shadow-[0_25px_60px_rgba(0,0,0,0.08)] rounded-b-2xl overflow-hidden p-4 z-50 cursor-default pointer-events-auto text-charcoal"
+                        >
+                          <div className="border-b border-zinc-100 pb-2.5 mb-2.5 flex items-center justify-between">
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-gold font-bold">
+                              Flagship Developments
+                            </span>
+                            <span className="text-[10px] text-slategray font-medium">Navi Mumbai</span>
+                          </div>
+
+                          <Link
+                            href="/projects/balaji-symphony"
+                            className="flex items-start gap-3.5 p-3 rounded-xl hover:bg-zinc-50 transition-colors group"
+                          >
+                            <div className="w-12 h-12 rounded-xl overflow-hidden relative flex-shrink-0 bg-zinc-950 border border-gold/30">
+                              <Image
+                                src="/projects/balaji-symphony/images/Front_eve_view_F.jpg"
+                                alt="Balaji Symphony"
+                                fill
+                                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                sizes="48px"
+                                unoptimized
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between">
+                                <h4 className="text-sm font-semibold text-charcoal group-hover:text-gold transition-colors">
+                                  Balaji Symphony
+                                </h4>
+                                <span className="text-[9px] font-bold uppercase tracking-wider text-gold bg-gold/15 px-2 py-0.5 rounded-full">
+                                  Panvel
+                                </span>
+                              </div>
+                              <p className="text-xs text-slategray mt-0.5 line-clamp-1 font-light">
+                                10-Acre Township · 2 BHK (₹88L+) & 2.5 BHK (₹1Cr+)
+                              </p>
+                              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-gold mt-1">
+                                View Project
+                                <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                                </svg>
+                              </span>
+                            </div>
+                          </Link>
+
+                          <div className="pt-2.5 mt-2 border-t border-zinc-100">
+                            <Link
+                              href="/#projects"
+                              className="flex items-center justify-between px-3 py-2 text-xs font-semibold text-charcoal hover:text-gold transition-colors rounded-xl hover:bg-zinc-50"
+                            >
+                              <span>Explore All Projects</span>
+                              <svg className="w-3.5 h-3.5 text-slategray" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </Link>
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -520,6 +621,62 @@ export default function Header() {
                                 </span>
                               </Link>
                             ))}
+                          </div>
+                        </motion.div>
+                      </div>
+                    ) : item.hasProjectsMenu ? (
+                      <div>
+                        <button
+                          onClick={() => setMobileProjectsOpen(!mobileProjectsOpen)}
+                          className="w-full flex items-center justify-between text-xl font-medium tracking-wide text-charcoal hover:text-gold transition-colors duration-200"
+                        >
+                          <span>{item.name}</span>
+                          <svg
+                            className={`w-5 h-5 text-slategray transition-transform duration-300 ${
+                              mobileProjectsOpen ? "rotate-180 text-gold" : ""
+                            }`}
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{
+                            height: mobileProjectsOpen ? "auto" : 0,
+                            opacity: mobileProjectsOpen ? 1 : 0
+                          }}
+                          transition={{ duration: 0.35, ease: "easeInOut" }}
+                          className="overflow-hidden mt-2"
+                        >
+                          <div className="flex flex-col gap-3 pl-4 border-l-2 border-zinc-100 py-2">
+                            <Link
+                              href="/projects/balaji-symphony"
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="group flex flex-col py-1"
+                            >
+                              <span className="text-[15px] font-semibold text-charcoal group-hover:text-gold transition-colors duration-200 flex items-center gap-2">
+                                <span className="w-1.5 h-1.5 rounded-full bg-gold"></span>
+                                Balaji Symphony
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-gold bg-gold/15 px-2 py-0.5 rounded-full">
+                                  Panvel
+                                </span>
+                              </span>
+                              <span className="text-xs text-slategray mt-0.5 pl-3.5">
+                                10-Acre Township · 2 BHK (₹88L+) & 2.5 BHK (₹1Cr+)
+                              </span>
+                            </Link>
+
+                            <Link
+                              href="/#projects"
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="text-xs text-charcoal hover:text-gold font-semibold pl-3.5 py-1 flex items-center gap-1"
+                            >
+                              Explore All Projects →
+                            </Link>
                           </div>
                         </motion.div>
                       </div>

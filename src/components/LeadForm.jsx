@@ -86,7 +86,7 @@ export default function LeadForm() {
           onBlur={() => setFocusedField(null)}
           placeholder={placeholder}
           maxLength={maxLength}
-          className="w-full px-4 py-3 bg-transparent text-white placeholder:text-zinc-400 focus:outline-none text-sm font-medium"
+          className="w-full px-4 py-3 bg-transparent text-white placeholder:text-zinc-400 focus:outline-none text-base sm:text-sm font-medium"
         />
         <motion.div
           initial={{ scaleX: 0 }}
@@ -115,14 +115,14 @@ export default function LeadForm() {
       initial={{ opacity: 0, x: 30 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="relative w-full max-w-[360px] mx-auto mt-4"
+      className="relative w-full max-w-full sm:max-w-[360px] mx-auto mt-2 sm:mt-4"
     >
       {/* 
         Solid, Highly Visible Dark Card 
         Uses zinc-950 (almost black) with high opacity and a sharp border 
         so it never blends into the background.
       */}
-      <div className="relative overflow-hidden bg-zinc-950/95 backdrop-blur-xl border border-zinc-700/80 p-6 md:p-7 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] rounded-2xl">
+      <div className="relative overflow-hidden bg-zinc-950/95 backdrop-blur-xl border border-zinc-700/80 p-5 sm:p-6 md:p-7 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] rounded-xl sm:rounded-2xl">
 
         {/* Subtle top highlight for a premium card feel */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-zinc-400/30 to-transparent" />
