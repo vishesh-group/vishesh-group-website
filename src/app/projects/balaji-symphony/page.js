@@ -22,7 +22,7 @@ const OFFICIAL_DOCUMENTS = [
   {
     id: "doc-pnl",
     title: "Project Document — Vinay S. Agarwal",
-    category: "Financial & Schedule Documentation",
+    category: "Six Months Compliance Report",
     date: "June 2026 Reference",
     description:
       "Official certified project documentation and schedule prepared by Vinay S. Agarwal for Balaji Symphony, Panvel.",
@@ -107,17 +107,15 @@ function SectionHeading({ eyebrow, title, subtitle, light = false, center = fals
         </span>
       )}
       <h2
-        className={`font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight mb-3 sm:mb-4 tracking-tight ${
-          light ? "text-white" : "text-charcoal"
-        }`}
+        className={`font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight mb-3 sm:mb-4 tracking-tight ${light ? "text-white" : "text-charcoal"
+          }`}
       >
         {title}
       </h2>
       {subtitle && (
         <p
-          className={`text-sm sm:text-base md:text-lg leading-relaxed ${
-            light ? "text-zinc-300" : "text-slategray"
-          }`}
+          className={`text-sm sm:text-base md:text-lg leading-relaxed ${light ? "text-zinc-300" : "text-slategray"
+            }`}
         >
           {subtitle}
         </p>
@@ -238,7 +236,7 @@ export default function BalajiSymphonyPage() {
 
           <div className="relative z-10 mx-auto max-w-[1400px] w-full px-4 sm:px-6 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              
+
               {/* Hero Left: Project Information */}
               <div className="lg:col-span-7 flex flex-col justify-center text-white">
                 {/* Breadcrumb with generous clearance from header */}
@@ -288,7 +286,7 @@ export default function BalajiSymphonyPage() {
                   className="text-sm sm:text-base md:text-xl text-zinc-300 font-light leading-relaxed max-w-2xl mb-6 sm:mb-8"
                 >
                   Navi Mumbai’s grandest landmark township. Offering expansive, ultra-luxurious{" "}
-                  <strong className="text-white font-medium">2 BHK & 2.5 BHK Sky Homes</strong> in 
+                  <strong className="text-white font-medium">2 BHK & 2.5 BHK Sky Homes</strong> in
                   New Panvel. Starting from{" "}
                   <strong className="text-gold font-medium">₹88 Lakhs+ for 2 BHK</strong> and{" "}
                   <strong className="text-gold font-medium">₹1 Crore+ for 2.5 BHK*</strong>.
@@ -359,7 +357,7 @@ export default function BalajiSymphonyPage() {
                 >
                   {/* Subtle top gold accent light */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold to-transparent" />
-                  
+
                   <div className="mb-4 sm:mb-6">
                     <div className="flex flex-wrap items-center justify-between gap-1 mb-1">
                       <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase text-gold">
@@ -401,7 +399,7 @@ export default function BalajiSymphonyPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-gold/5 via-transparent to-gold/5" />
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 md:px-12 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 items-center text-center md:text-left divide-y md:divide-y-0 md:divide-x divide-white/10">
-              
+
               {/* Price Point 1 */}
               <div className="p-4 sm:p-5 md:px-6 rounded-2xl bg-zinc-900/60 md:bg-transparent border border-white/5 md:border-0">
                 <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-gold font-bold block mb-1">
@@ -456,7 +454,7 @@ export default function BalajiSymphonyPage() {
         <section id="overview" className="py-16 md:py-24 lg:py-32 bg-white" aria-label="Project Overview">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-              
+
               {/* Real Project Image with Mobile Touch Indicator */}
               <div className="lg:col-span-6">
                 <div
@@ -472,7 +470,7 @@ export default function BalajiSymphonyPage() {
                     unoptimized
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-85 group-hover:opacity-60 transition-opacity" />
-                  
+
                   {/* Floating click indicator */}
                   <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex items-center justify-between text-white">
                     <div>
@@ -500,16 +498,16 @@ export default function BalajiSymphonyPage() {
 
                 <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4 text-slategray leading-relaxed text-sm sm:text-base">
                   <p>
-                    Rising proudly over Sukhapur in New Panvel, <strong className="text-charcoal font-semibold">Balaji Symphony</strong> is 
-                    one of Navi Mumbai’s most celebrated residential landmarks. Spanning an expansive 10-acre layout, 
+                    Rising proudly over Sukhapur in New Panvel, <strong className="text-charcoal font-semibold">Balaji Symphony</strong> is
+                    one of Navi Mumbai’s most celebrated residential landmarks. Spanning an expansive 10-acre layout,
                     the project harmoniously combines monumental scale with the serene natural backdrop of Matheran foothills.
                   </p>
                   <p>
                     Balaji Symphony offers thoughtfully planned, spacious{" "}
                     <strong className="text-charcoal font-semibold">2 BHK & 2.5 BHK apartments</strong> starting at{" "}
                     <strong className="text-gold font-semibold">₹88 Lakhs+ for 2 BHK</strong> and{" "}
-                    <strong className="text-gold font-semibold">₹1 Crore+ for 2.5 BHK</strong>. Every home is 
-                    master-planned for maximum usable carpet space, natural cross-ventilation, and commanding panoramic vistas, 
+                    <strong className="text-gold font-semibold">₹1 Crore+ for 2.5 BHK</strong>. Every home is
+                    master-planned for maximum usable carpet space, natural cross-ventilation, and commanding panoramic vistas,
                     with rapid connectivity to Panvel Junction, Old Mumbai-Pune Highway, Atal Setu (MTHL), and the upcoming NMIA Airport.
                   </p>
                 </div>
@@ -572,7 +570,7 @@ export default function BalajiSymphonyPage() {
             />
 
             <div className="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              
+
               {/* 2 BHK */}
               <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8 border border-zinc-200/80 shadow-sm hover:shadow-xl hover:border-gold/40 transition-all duration-300 flex flex-col justify-between group">
                 <div>
@@ -731,7 +729,7 @@ export default function BalajiSymphonyPage() {
         <section id="amenities" className="py-16 md:py-24 lg:py-32 bg-white" aria-label="Lifestyle Amenities">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-              
+
               <div className="lg:col-span-6">
                 <SectionHeading
                   eyebrow="World-Class Amenities"
@@ -781,7 +779,7 @@ export default function BalajiSymphonyPage() {
                     unoptimized
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-85 group-hover:opacity-60 transition-opacity" />
-                  
+
                   <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex items-center justify-between text-white">
                     <div>
                       <span className="text-[10px] sm:text-xs uppercase tracking-widest text-gold font-semibold">
@@ -878,9 +876,9 @@ export default function BalajiSymphonyPage() {
             {/* Regulatory Scope Clarity Notice */}
             <div className="mt-8 sm:mt-12 p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-zinc-900/50 border border-white/5 max-w-4xl mx-auto text-center text-[11px] sm:text-xs text-zinc-400 leading-relaxed">
               <p>
-                <strong className="text-zinc-300">Statutory Notice:</strong> Official clearance documents 
-                reflect project compliance parameters at their respective dates of issue. Prospective purchasers 
-                are invited to inspect complete updated certifications, project registers, and Form-V disclosures 
+                <strong className="text-zinc-300">Statutory Notice:</strong> Official clearance documents
+                reflect project compliance parameters at their respective dates of issue. Prospective purchasers
+                are invited to inspect complete updated certifications, project registers, and Form-V disclosures
                 at our on-site sales lounge.
               </p>
             </div>
@@ -913,7 +911,7 @@ export default function BalajiSymphonyPage() {
                     unoptimized
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
-                  
+
                   <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
                     <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-black/60 backdrop-blur-md text-[9px] sm:text-[10px] uppercase tracking-widest font-bold text-gold border border-gold/30">
                       {item.tag}
@@ -941,7 +939,7 @@ export default function BalajiSymphonyPage() {
         <section id="location" className="py-16 md:py-24 lg:py-32 bg-zinc-50" aria-label="Location and Connectivity">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-              
+
               <div className="lg:col-span-6">
                 <SectionHeading
                   eyebrow="Strategic Location"
@@ -1033,7 +1031,7 @@ export default function BalajiSymphonyPage() {
               Step Into Your Future at <span className="text-gold italic">Balaji Symphony</span>
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-zinc-300 font-light max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
-              Book a private walkthrough with our senior real estate consultants to experience sample show homes, 
+              Book a private walkthrough with our senior real estate consultants to experience sample show homes,
               panoramic tower views, and tailored payment schemes across 2 BHK (₹88L+) & 2.5 BHK (₹1Cr+) residences.
             </p>
 
